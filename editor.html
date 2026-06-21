@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en" class="editor-theme">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#11132b" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>Content Studio — Editor</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <!-- Reuse the site's component styles so the generated form controls render -->
+  <link rel="stylesheet" href="css/style.css" />
+  <style>
+    /* ===== Content Studio — its own dark studio theme ===== */
+    html.editor-theme {
+      --bg: #0a0c1c;
+      --bg-2: #14172e;
+      --body-bg: #0a0c1c;
+      --border: rgba(255,255,255,0.10);
+      --text: #eef1ff;
+      --text-soft: #cdd2f0;
+      --muted: #8e97c2;
+      --accent: #8b7bff;
+      --accent-soft: rgba(139,123,255,0.16);
+      --accent-2: #36e6b0;
+      --accent-2-soft: rgba(54,230,176,0.16);
+      --input-bg: rgba(255,255,255,0.04);
+      --success: var(--accent-2);
+    }
+    html.editor-theme, body {
+      background:
+        radial-gradient(1200px 600px at 100% -10%, rgba(139,123,255,0.18), transparent 60%),
+        radial-gradient(900px 500px at -10% 0%, rgba(54,230,176,0.10), transparent 55%),
+        var(--bg);
+      color: var(--text);
+      font-family: 'Inter', system-ui, sans-serif;
+      min-height: 100dvh;
+    }
+
+    /* Top bar */
+    .studio-bar {
+      position: sticky; top: 0; z-index: 50;
+      display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
+      padding: 14px 18px;
+      background: rgba(10,12,28,0.78);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border);
+    }
+    .studio-brand { display: flex; align-items: center; gap: 10px; font-weight: 800; font-size: 18px; letter-spacing: -0.01em; }
+    .studio-brand .badge {
+      display: inline-grid; place-items: center; width: 34px; height: 34px; border-radius: 10px;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2)); color: #0a0c1c; font-weight: 800;
+    }
+    .studio-brand small { font-weight: 500; color: var(--muted); font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; }
+    .studio-bar .spacer { flex: 1; }
+    .studio-bar .btn { font-size: 14px; }
+
+    .studio-wrap { max-width: 920px; margin: 0 auto; padding: 22px 16px 80px; }
+    .studio-intro { color: var(--muted); font-size: 14px; margin: 4px 0 20px; line-height: 1.6; }
+    .studio-intro code { background: var(--bg-2); padding: 2px 7px; border-radius: 6px; color: var(--accent-2); }
+
+    /* Login */
+    .studio-login {
+      max-width: 380px; margin: 14vh auto 0; padding: 30px 26px; text-align: center;
+      background: var(--bg-2); border: 1px solid var(--border); border-radius: 18px;
+    }
+    .studio-login .badge { width: 52px; height: 52px; border-radius: 14px; font-size: 22px; margin: 0 auto 14px; display: grid; place-items: center; background: linear-gradient(135deg, var(--accent), var(--accent-2)); color: #0a0c1c; font-weight: 800; }
+    .studio-login h2 { font-size: 22px; margin-bottom: 6px; }
+    .studio-login p { color: var(--muted); font-size: 14px; margin-bottom: 18px; }
+    .studio-login input { width: 100%; padding: 13px 14px; border-radius: 12px; border: 1px solid var(--border); background: var(--input-bg); color: var(--text); font-size: 16px; margin-bottom: 12px; }
+    .studio-login .err { color: #ff8080; font-size: 13px; margin-top: 8px; min-height: 16px; }
+
+    /* Tabs — horizontal scroll on mobile */
+    .studio-tabs {
+      display: flex; gap: 8px; overflow-x: auto; padding-bottom: 10px; margin-bottom: 18px;
+      -webkit-overflow-scrolling: touch; scrollbar-width: thin;
+      border-bottom: 1px solid var(--border);
+    }
+    .studio-tabs::-webkit-scrollbar { height: 6px; }
+    .studio-tabs button {
+      flex-shrink: 0; padding: 9px 15px; border-radius: 999px; border: 1px solid var(--border);
+      background: var(--bg-2); color: var(--text-soft); font-size: 14px; font-weight: 500; cursor: pointer;
+      white-space: nowrap; font-family: inherit; transition: all .15s;
+    }
+    .studio-tabs button:hover { border-color: var(--accent); color: var(--text); }
+    .studio-tabs button.active { background: linear-gradient(135deg, var(--accent), var(--accent-2)); color: #0a0c1c; border-color: transparent; font-weight: 700; }
+    .studio-tabs .admin-status { flex-shrink: 0; align-self: center; margin-left: auto; padding-left: 10px; font-size: 12px; color: var(--muted); white-space: nowrap; }
+    .studio-tabs .admin-status.saved { color: var(--accent-2); }
+
+    /* Panels */
+    .admin-panel { display: none; }
+    .admin-panel.active { display: block; }
+    .admin-card { background: var(--bg-2); border: 1px solid var(--border); border-radius: 16px; padding: 18px; margin-bottom: 16px; }
+    .admin-card h3 { font-size: 15px; margin-bottom: 14px; display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+    .admin-field { margin-bottom: 14px; }
+    .admin-field label { display: block; font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); font-weight: 600; margin-bottom: 6px; }
+    .admin-field input, .admin-field textarea {
+      width: 100%; padding: 12px 13px; background: var(--input-bg); border: 1px solid var(--border);
+      border-radius: 11px; color: var(--text); font-family: inherit; font-size: 15px; min-height: 44px;
+    }
+    .admin-field input:focus, .admin-field textarea:focus { outline: none; border-color: var(--accent); }
+    .admin-grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    @media (max-width: 560px) { .admin-grid-2 { grid-template-columns: 1fr; } }
+    .admin-mini-btn {
+      padding: 6px 11px; border-radius: 8px; border: 1px solid var(--border); background: var(--input-bg);
+      color: var(--text-soft); font-size: 12.5px; font-weight: 500; cursor: pointer; font-family: inherit;
+    }
+    .admin-mini-btn:hover { border-color: var(--accent); color: var(--text); }
+    .admin-mini-btn.danger { color: #ff9090; border-color: rgba(255,120,120,0.3); }
+    .small-actions { display: flex; gap: 6px; }
+
+    /* Buttons (override site btns for studio look) */
+    .editor-theme .btn { border-radius: 11px; padding: 10px 16px; font-size: 14px; font-weight: 600; cursor: pointer; border: 1px solid var(--border); font-family: inherit; }
+    .editor-theme .btn-ghost { background: var(--input-bg); color: var(--text-soft); }
+    .editor-theme .btn-ghost:hover { border-color: var(--accent); color: var(--text); }
+    .editor-theme .btn-primary { background: linear-gradient(135deg, var(--accent), var(--accent-2)); color: #0a0c1c; border: none; }
+    .editor-theme .btn-primary:hover { filter: brightness(1.07); }
+
+    .admin-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 18px; }
+    .err { color: #ff8080; font-size: 13px; }
+  </style>
+  <script>
+    // Keep this page on its own fixed studio theme regardless of site theme
+    try { localStorage.getItem('theme'); } catch (e) {}
+  </script>
+</head>
+<body data-page="admin">
+
+<!-- TOP BAR -->
+<header class="studio-bar">
+  <div class="studio-brand">
+    <span class="badge">G</span>
+    <span>Content Studio <small>Editor</small></span>
+  </div>
+  <div class="spacer"></div>
+  <a class="btn btn-ghost" href="index.html">← Site</a>
+  <button class="btn btn-ghost" id="ghSettingsBtn">⚙ GitHub</button>
+  <button class="btn btn-primary" id="publishBtn">☁ Publish live</button>
+</header>
+
+<!-- LOGIN GATE -->
+<section id="loginPanel" class="studio-login">
+  <span class="badge">🔒</span>
+  <h2>Content Studio</h2>
+  <p>Enter your password to edit the site.</p>
+  <input type="password" id="adminPass" placeholder="Password" autocomplete="current-password" />
+  <button class="btn btn-primary" id="loginBtn" style="width:100%;">Unlock editor</button>
+  <div class="err" id="loginErr"></div>
+</section>
+
+<!-- EDITOR -->
+<main id="adminMain" class="studio-wrap" style="display:none;">
+  <p class="studio-intro">
+    Edit any section below, then tap <strong>Publish live</strong> to update your site (refreshes in ~1 min).
+    Use the <strong>Files &amp; Media</strong> tab to upload photos, your resume, or delete files. Connect GitHub once via <strong>⚙ GitHub</strong>.
+  </p>
+
+  <div class="admin-actions">
+    <button class="btn btn-ghost" id="reloadBtn" title="Reload original content.json">↻ Reload</button>
+    <button class="btn btn-ghost" id="importBtn">Import JSON</button>
+    <input type="file" id="importFile" accept="application/json,.json" style="display:none;" />
+    <button class="btn btn-ghost" id="clearBtn" title="Clear local edits">Discard local</button>
+    <button class="btn btn-ghost" id="exportBtn">↓ Export JSON</button>
+  </div>
+
+  <!-- GitHub connect panel -->
+  <div class="admin-card" id="ghPanel" style="display:none;">
+    <h3>Connect GitHub <span class="small-actions"><button class="admin-mini-btn" id="ghCloseBtn" type="button">Close</button></span></h3>
+    <p style="color:var(--muted);font-size:13px;margin:0 0 12px;">
+      Paste a GitHub token with <strong>Contents: read &amp; write</strong> on this repo. Stored only on this device.
+    </p>
+    <div class="admin-field"><label>GitHub token</label><input type="password" id="ghToken" placeholder="github_pat_… or ghp_…" autocomplete="off" /></div>
+    <div class="admin-grid-2">
+      <div class="admin-field"><label>Owner (username)</label><input type="text" id="ghOwner" placeholder="Gaurav9564" /></div>
+      <div class="admin-field"><label>Repository</label><input type="text" id="ghRepo" placeholder="gauravyadav_portfolio" /></div>
+    </div>
+    <div class="admin-grid-2">
+      <div class="admin-field"><label>Branch</label><input type="text" id="ghBranch" placeholder="main" /></div>
+      <div class="admin-field"><label>File path</label><input type="text" id="ghPath" placeholder="data/content.json" /></div>
+    </div>
+    <button class="btn btn-primary" id="ghSaveBtn" style="margin-top:6px;">Save connection</button>
+    <div class="err" id="ghMsg" style="margin-top:8px;"></div>
+  </div>
+
+  <!-- Tabs -->
+  <div class="studio-tabs" id="tabs">
+    <button data-tab="site" class="active">Site &amp; Footer</button>
+    <button data-tab="hero">Hero</button>
+    <button data-tab="stats">Stats</button>
+    <button data-tab="about">About</button>
+    <button data-tab="education">Education + Certs</button>
+    <button data-tab="experience">Experience</button>
+    <button data-tab="skills">Skills</button>
+    <button data-tab="contact">Contact</button>
+    <button data-tab="files">Files &amp; Media</button>
+    <span class="admin-status" id="status">Loading…</span>
+  </div>
+
+  <!-- Panels (populated by admin.js) -->
+  <div class="admin-panel active" data-panel="site"></div>
+  <div class="admin-panel" data-panel="hero"></div>
+  <div class="admin-panel" data-panel="stats"></div>
+  <div class="admin-panel" data-panel="about"></div>
+  <div class="admin-panel" data-panel="education"></div>
+  <div class="admin-panel" data-panel="experience"></div>
+  <div class="admin-panel" data-panel="skills"></div>
+  <div class="admin-panel" data-panel="contact"></div>
+  <div class="admin-panel" data-panel="files"></div>
+</main>
+
+<script src="js/admin.js"></script>
+</body>
+</html>
