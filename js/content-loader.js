@@ -41,23 +41,28 @@
 
   function renderNavFooter(c) {
     if (!c) return;
+    const site = c.site || {};
+    const footer = c.footer || {};
+    const contact = c.contact || {};
     // Logo text
-    document.querySelectorAll('[data-bind="logo"]').forEach(el => {
-      el.innerHTML = esc(c.site.logo) + '<span class="dot">.</span>';
-    });
+    if (site.logo != null) {
+      document.querySelectorAll('[data-bind="logo"]').forEach(el => {
+        el.innerHTML = esc(site.logo) + '<span class="dot">.</span>';
+      });
+    }
     // Footer
-    setText('[data-bind="footer.brand"]', c.site.name);
-    setText('[data-bind="footer.blurb"]', c.footer.blurb || c.footer.blurbShort);
-    setText('[data-bind="footer.credit"]', c.footer.credit);
+    if (site.name != null) setText('[data-bind="footer.brand"]', site.name);
+    setText('[data-bind="footer.blurb"]', footer.blurb || footer.blurbShort || '');
+    if (footer.credit != null) setText('[data-bind="footer.credit"]', footer.credit);
     setText('[data-bind="footer.year"]', new Date().getFullYear());
 
     // Footer connect links
     const fEmail = document.querySelector('[data-bind="footer.email"]');
-    if (fEmail) { fEmail.textContent = c.contact.email; fEmail.href = 'mailto:' + c.contact.email; }
+    if (fEmail && contact.email) { fEmail.textContent = contact.email; fEmail.href = 'mailto:' + contact.email; }
     const fPhone = document.querySelector('[data-bind="footer.phone"]');
-    if (fPhone) { fPhone.textContent = c.contact.phone; fPhone.href = 'tel:' + (c.contact.phoneHref || c.contact.phone.replace(/[^\d+]/g, '')); }
+    if (fPhone && contact.phone) { fPhone.textContent = contact.phone; fPhone.href = 'tel:' + (contact.phoneHref || contact.phone.replace(/[^\d+]/g, '')); }
     const fLink = document.querySelector('[data-bind="footer.linkedin"]');
-    if (fLink) { fLink.textContent = 'LinkedIn'; fLink.href = c.contact.linkedinUrl; }
+    if (fLink && contact.linkedinUrl) { fLink.textContent = 'LinkedIn'; fLink.href = contact.linkedinUrl; }
   }
 
   function renderHero(c) {
@@ -270,9 +275,13 @@
 
   function renderAll(c) {
     if (!c) return;
-    document.title = (document.title.includes('—')
-      ? document.title.split('—')[0].trim() + ' — ' + c.site.name
-      : c.site.name);
+    // Keep the page-specific title; only sync the site-name suffix after "—".
+    // (Avoids turning the home title "Gaurav Yadav — …" into "Gaurav Yadav — Gaurav Yadav".)
+    const siteName = c.site && c.site.name;
+    if (siteName && document.title.includes('—')) {
+      const prefix = document.title.split('—')[0].trim();
+      if (prefix && prefix !== siteName) document.title = prefix + ' — ' + siteName;
+    }
 
     renderNavFooter(c);
     renderHero(c);
