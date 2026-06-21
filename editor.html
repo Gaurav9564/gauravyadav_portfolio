@@ -98,7 +98,7 @@
     .admin-field label { display: block; font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); font-weight: 600; margin-bottom: 6px; }
     .admin-field input, .admin-field textarea {
       width: 100%; padding: 12px 13px; background: var(--input-bg); border: 1px solid var(--border);
-      border-radius: 11px; color: var(--text); font-family: inherit; font-size: 15px; min-height: 44px;
+      border-radius: 11px; color: var(--text); font-family: inherit; font-size: 16px; min-height: 44px;
     }
     .admin-field input:focus, .admin-field textarea:focus { outline: none; border-color: var(--accent); }
     .admin-grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
@@ -120,6 +120,25 @@
 
     .admin-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 18px; }
     .err { color: #ff8080; font-size: 13px; }
+
+    /* ===== Phone polish ===== */
+    @media (max-width: 560px) {
+      .studio-bar { padding: 10px 12px; gap: 8px; }
+      .studio-brand { font-size: 16px; }
+      .studio-brand small { display: none; }
+      .studio-bar .btn { padding: 10px 12px; font-size: 13px; }
+      .studio-bar a[href="index.html"] { padding: 10px 11px; }      /* compact "← Site" */
+      .studio-bar #publishBtn { flex: 1 1 auto; text-align: center; }/* big, thumb-friendly Publish */
+      .studio-wrap { padding: 16px 12px 96px; }
+      .studio-intro { font-size: 13px; }
+      .admin-card { padding: 14px; }
+      .admin-actions .btn { flex: 1 1 calc(50% - 4px); text-align: center; }
+      #filesList > div { flex-wrap: wrap; }                          /* file rows wrap instead of overflow */
+      #filesList > div > span:last-child { width: 100%; margin-top: 4px; }
+      .admin-mini-btn { padding: 8px 12px; }                          /* larger tap targets */
+    }
+    /* Smooth momentum scroll + no accidental horizontal overflow */
+    body { overflow-x: hidden; -webkit-text-size-adjust: 100%; }
   </style>
   <script>
     // Keep this page on its own fixed studio theme regardless of site theme

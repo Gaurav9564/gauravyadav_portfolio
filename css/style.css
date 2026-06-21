@@ -1162,7 +1162,7 @@ footer {
   border-radius: var(--radius-sm);
   color: var(--text);
   font-family: inherit;
-  font-size: 14px;
+  font-size: 16px; /* >=16px prevents iOS zoom-on-focus when editing on mobile */
   min-height: 44px;
 }
 .admin-field textarea { min-height: 90px; resize: vertical; line-height: 1.55; }
