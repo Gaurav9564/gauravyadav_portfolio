@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#faf7f2" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>Admin — Edit Content</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400;1,9..144,500&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css" />
+  <script>
+    (function() {
+      try {
+        var t = localStorage.getItem('theme');
+        if (!t) t = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        document.documentElement.setAttribute('data-theme', t);
+      } catch (e) {}
+    })();
+  </script>
+</head>
+<body data-page="admin">
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="index.html" class="logo">Gaurav<span class="dot">.</span> <small style="font-family:Inter,sans-serif;font-size:11px;letter-spacing:0.15em;color:var(--muted);font-weight:500;margin-left:6px;">ADMIN</small></a>
+    <div class="nav-right">
+      <div class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="experience.html">Experience</a>
+        <a href="skills.html">Skills</a>
+        <a href="contact.html">Contact</a>
+      </div>
+      <button class="theme-toggle" aria-label="Toggle theme" title="Toggle theme">
+        <span class="theme-icon">☾</span>
+      </button>
+      <button class="menu-btn" aria-label="Toggle menu">&#9776;</button>
+    </div>
+  </div>
+</nav>
+
+<!-- LOGIN GATE -->
+<section id="loginPanel" class="admin-login">
+  <h2>Admin sign-in</h2>
+  <p>Enter the password to edit site content.</p>
+  <input type="password" id="adminPass" placeholder="Password" autocomplete="current-password" />
+  <button class="btn btn-primary" id="loginBtn" style="width:100%;justify-content:center;">Unlock</button>
+  <div class="err" id="loginErr"></div>
+</section>
+
+<!-- ADMIN UI -->
+<main id="adminMain" class="admin-shell" style="display:none;">
+  <div class="admin-head">
+    <div>
+      <h1>Edit <em class="italic accent-text">content</em></h1>
+      <p style="color:var(--muted);font-size:14px;margin-top:6px;">Changes preview live on the site (saved in this browser). Use <strong>Export JSON</strong> to publish — replace <code style="background:var(--bg-2);padding:2px 6px;border-radius:4px;">data/content.json</code> on your host.</p>
+    </div>
+    <div class="admin-actions">
+      <button class="btn btn-ghost" id="reloadBtn" title="Reload original content.json">↻ Reload</button>
+      <button class="btn btn-ghost" id="importBtn">Import JSON</button>
+      <input type="file" id="importFile" accept="application/json,.json" style="display:none;" />
+      <button class="btn btn-ghost" id="clearBtn" title="Clear local edits">Discard local</button>
+      <button class="btn btn-primary" id="exportBtn">↓ Export JSON</button>
+    </div>
+  </div>
+
+  <div class="admin-hint">
+    <strong>How it works:</strong> Editing here saves to this browser only. To publish edits live for visitors, click <strong>Export JSON</strong>, then upload the downloaded <code>content.json</code> to <code>data/content.json</code> on your host (replacing the existing one).
+  </div>
+
+  <div class="admin-tabs" id="tabs">
+    <button data-tab="site" class="active">Site &amp; Footer</button>
+    <button data-tab="hero">Hero</button>
+    <button data-tab="stats">Stats</button>
+    <button data-tab="about">About</button>
+    <button data-tab="education">Education + Certs</button>
+    <button data-tab="experience">Experience</button>
+    <button data-tab="skills">Skills</button>
+    <button data-tab="contact">Contact</button>
+    <span class="admin-status" id="status">Loading…</span>
+  </div>
+
+  <!-- Panels (populated by admin.js) -->
+  <div class="admin-panel active" data-panel="site"></div>
+  <div class="admin-panel" data-panel="hero"></div>
+  <div class="admin-panel" data-panel="stats"></div>
+  <div class="admin-panel" data-panel="about"></div>
+  <div class="admin-panel" data-panel="education"></div>
+  <div class="admin-panel" data-panel="experience"></div>
+  <div class="admin-panel" data-panel="skills"></div>
+  <div class="admin-panel" data-panel="contact"></div>
+</main>
+
+<script src="js/main.js"></script>
+<script src="js/admin.js"></script>
+</body>
+</html>

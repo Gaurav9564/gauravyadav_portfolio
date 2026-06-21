@@ -1,0 +1,172 @@
+{
+  "site": {
+    "name": "Gaurav Yadav",
+    "logo": "Gaurav",
+    "tagline": "Customer Service & IT Support Professional",
+    "year": "2026"
+  },
+  "hero": {
+    "metaLabel": "Portfolio · 2026",
+    "titleStart": "Hello, I'm ",
+    "titleEm": "Gaurav Yadav",
+    "titleEnd": " — bridging people & technology with care.",
+    "subtitle": "Computer Science graduate with hands-on experience in customer service, telecom & Wi-Fi support, and PC/laptop setup. I bring a calm, professional approach to passenger assistance, front-desk operations, and technical troubleshooting.",
+    "primaryCtaLabel": "Get in touch →",
+    "primaryCtaHref": "contact.html",
+    "secondaryCtaLabel": "About me",
+    "secondaryCtaHref": "about.html",
+    "portraitInitials": "GY",
+    "portraitTag": "Open to opportunities"
+  },
+  "stats": [
+    { "num": "76.87", "unit": "%", "label": "B.Tech CSE Score" },
+    { "num": "4+", "unit": "", "label": "Professional Roles" },
+    { "num": "2", "unit": "", "label": "Certifications" },
+    { "num": "2023", "unit": "", "label": "Year Graduated" }
+  ],
+  "previewHead": {
+    "title": "Selected ",
+    "titleEm": "experience",
+    "linkLabel": "View all experience →"
+  },
+  "about": {
+    "eyebrow": "About Me",
+    "headStart": "A quick ",
+    "headEm": "introduction",
+    "headSubtitle": "Versatile professional bridging customer-facing roles and IT support.",
+    "greeting": "Hello there!",
+    "paragraphs": [
+      "I'm a <strong>Computer Science & Engineering graduate</strong> from Shri Shankaracharya Institute of Professional Management and Technology, Raipur (C.G.). Over the past few years, I've worked across customer service, reception, and IT support roles — gaining hands-on experience in passenger assistance, front-desk operations, telecom & Wi-Fi setup, and computer hardware.",
+      "Whether it's making an airport guest feel welcomed or updating firmware on a network switch, I bring care, patience, and attention to detail to every task. I'm currently looking for opportunities where I can combine my technical foundation with my people skills — front-desk roles, customer service, or IT support positions where both sides of my experience add value."
+    ],
+    "quote": "I enjoy working with people, solving practical problems, and keeping systems running smoothly.",
+    "facts": [
+      { "label": "Education", "value": "B.Tech, CSE" },
+      { "label": "Score", "value": "76.87%" },
+      { "label": "Experience", "value": "4 roles" },
+      { "label": "Languages", "value": "English, Hindi" },
+      { "label": "Location", "value": "India" },
+      { "label": "Status", "value": "Available", "highlight": true }
+    ]
+  },
+  "education": {
+    "headingStart": "Education & ",
+    "headingEm": "certifications",
+    "degree": "B.Tech — Computer Science & Engineering",
+    "school": "Shri Shankaracharya Institute of Professional Management and Technology, Raipur, C.G.",
+    "description": "A four-year programme covering core computer science, software fundamentals, and engineering practice — providing the technical foundation behind my hands-on IT support work.",
+    "score": "76.87%",
+    "duration": "April 2019 – May 2023"
+  },
+  "certifications": {
+    "intro": "Continuous learning across data and productivity tools.",
+    "items": [
+      { "title": "Google Data Analytics Professional Certificate", "issuer": "Coursera" },
+      { "title": "Microsoft Excel — Excel Course", "issuer": "Udemy" }
+    ]
+  },
+  "experience": {
+    "eyebrow": "Work Experience",
+    "headStart": "My professional ",
+    "headEm": "journey",
+    "headSubtitle": "Hands-on experience across customer service and IT support roles.",
+    "items": [
+      {
+        "year": "2026",
+        "role": "Project Engineer — Telecom & Wi-Fi",
+        "company": "Nippon Data Systems Ltd.",
+        "period": "January 2026 – March 2026",
+        "shortDesc": "Installed IP/analog phones and managed Wi-Fi coverage checks across client offices.",
+        "bullets": [
+          "Installed IP and analog telephones at client offices per senior-engineer instructions.",
+          "Checked Wi-Fi network coverage by walking the site, testing signal strength and connectivity.",
+          "Performed basic health checks on Wi-Fi access points and reported low-signal or dead zones.",
+          "Updated firmware on 24-port switches (uploading .bin files & restarting) so senior engineers could complete configuration."
+        ]
+      },
+      {
+        "year": "2025",
+        "role": "Customer Service Executive",
+        "company": "Global Flight Handling Service Pvt Ltd",
+        "period": "January 2025 – December 2025",
+        "shortDesc": "Assisted passengers, handled inquiries, and made public announcements at the airport.",
+        "bullets": [
+          "Greeted and assisted passengers in a friendly and professional manner.",
+          "Provided accurate information about flight schedules, boarding gates, and airport facilities.",
+          "Handled passenger inquiries, complaints, and special requests with patience and efficiency.",
+          "Communicated clearly with a diverse range of passengers and made public flight announcements."
+        ]
+      },
+      {
+        "year": "2024",
+        "role": "Receptionist",
+        "company": "Front-Desk & Administrative Support",
+        "period": "January 2024 – January 2025",
+        "shortDesc": "Greeted visitors, managed calls, and supported office staff with scheduling.",
+        "bullets": [
+          "Greeted and assisted visitors in a professional and courteous manner.",
+          "Answered and directed phone calls efficiently.",
+          "Managed appointment scheduling and calendar management.",
+          "Provided administrative support to office staff."
+        ]
+      },
+      {
+        "year": "2023",
+        "role": "Setup Technician — PC / Laptop & Wi-Fi",
+        "company": "Tech Grow Solution",
+        "period": "August 2023 – September 2023",
+        "shortDesc": "Assembled PCs, installed OS/drivers, and prepared systems for end-users.",
+        "bullets": [
+          "Assembled and configured desktop computers and related hardware to spec.",
+          "Diagnosed and resolved common hardware issues to restore system functionality.",
+          "Installed operating systems and required drivers for stable performance.",
+          "Prepared systems for end-users by completing tests and checks before delivery."
+        ]
+      }
+    ]
+  },
+  "skills": {
+    "eyebrow": "Skills",
+    "headStart": "What I ",
+    "headEm": "bring",
+    "headSubtitle": "A blend of people-skills and technical know-how.",
+    "pillars": [
+      { "num": "8+", "label": "Skill Areas" },
+      { "num": "3", "label": "Years Hands-on" },
+      { "num": "2", "label": "Certifications" },
+      { "num": "100%", "label": "Eager to Learn" }
+    ],
+    "subhead": "Detailed ",
+    "subheadEm": "skill set",
+    "items": [
+      { "icon": "☻", "title": "Customer Service", "desc": "Passenger assistance, front-desk operations, warm professional communication.", "percent": 90 },
+      { "icon": "☎", "title": "Call & Reception", "desc": "Phone etiquette, visitor handling, lobby management, public announcements.", "percent": 88 },
+      { "icon": "💻", "title": "PC & Hardware", "desc": "Assembly, OS & driver installation, hands-on hardware troubleshooting.", "percent": 82 },
+      { "icon": "📶", "title": "Telecom & Wi-Fi", "desc": "IP/analog phone installs, Wi-Fi coverage checks, access-point health diagnostics.", "percent": 80 },
+      { "icon": "🔗", "title": "Networking Basics", "desc": "Switch firmware updates, basic networking tasks, reporting to senior engineers.", "percent": 75 },
+      { "icon": "📊", "title": "Data & Reporting", "desc": "Cleaning, summarizing, and presenting data using analytical thinking.", "percent": 78 },
+      { "icon": "📄", "title": "MS Office Suite", "desc": "Excel, Word, and PowerPoint for everyday administrative work and reporting.", "percent": 85 },
+      { "icon": "💬", "title": "Communication", "desc": "Clear, friendly communication with diverse audiences and team members.", "percent": 92 }
+    ]
+  },
+  "contact": {
+    "eyebrow": "Get in touch",
+    "headStart": "Let's ",
+    "headEm": "work together",
+    "headSubtitle": "I'm open to opportunities in customer service, front-desk roles, and IT support. Send me a message — it lands directly in my Gmail inbox.",
+    "email": "Gauravyadav9564@gmail.com",
+    "phone": "+91 79996 90106",
+    "phoneHref": "+917999690106",
+    "linkedinUrl": "https://linkedin.com/in/gauravy-yadav",
+    "linkedinLabel": "linkedin.com/in/gauravy-yadav",
+    "location": "India",
+    "formHeading": "Send a ",
+    "formHeadingEm": "message",
+    "formNote": "Fill in the form and your message will be delivered straight to my Gmail inbox."
+  },
+  "footer": {
+    "blurb": "Customer Service & IT Support Professional, based in India. Open to opportunities in front-desk, customer service, and technical support.",
+    "blurbShort": "Customer Service & IT Support Professional, based in India.",
+    "credit": "Designed & crafted with care."
+  }
+}

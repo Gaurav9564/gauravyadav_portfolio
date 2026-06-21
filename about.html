@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#faf7f2" />
+  <title>About — Gaurav Yadav</title>
+  <meta name="description" content="About Gaurav Yadav — background, education, and certifications." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400;1,9..144,500&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css" />
+  <script>
+    (function() {
+      try {
+        var t = localStorage.getItem('theme');
+        if (!t) t = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        document.documentElement.setAttribute('data-theme', t);
+      } catch (e) {}
+    })();
+  </script>
+</head>
+<body data-page="about">
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="index.html" class="logo" data-bind="logo">Gaurav<span class="dot">.</span></a>
+    <div class="nav-right">
+      <div class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="experience.html">Experience</a>
+        <a href="skills.html">Skills</a>
+        <a href="contact.html">Contact</a>
+      </div>
+      <button class="theme-toggle" aria-label="Toggle theme" title="Toggle theme">
+        <span class="theme-icon">☾</span>
+      </button>
+      <button class="menu-btn" aria-label="Toggle menu">&#9776;</button>
+    </div>
+  </div>
+</nav>
+
+<main class="page">
+  <div class="page-head reveal">
+    <span class="eyebrow" data-bind="about.eyebrow">About Me</span>
+    <h1 data-bind="about.head">A quick <em class="italic accent-text">introduction</em></h1>
+    <p data-bind="about.headSubtitle">Versatile professional bridging customer-facing roles and IT support.</p>
+  </div>
+
+  <div class="about-grid">
+    <div class="about-text reveal">
+      <h2 data-bind="about.greeting">Hello there!</h2>
+      <div data-bind="about.paragraphs">
+        <p>I'm a <strong>Computer Science &amp; Engineering graduate</strong> from Shri Shankaracharya Institute of Professional Management and Technology, Raipur (C.G.). Over the past few years, I've worked across customer service, reception, and IT support roles — gaining hands-on experience in passenger assistance, front-desk operations, telecom &amp; Wi-Fi setup, and computer hardware.</p>
+        <div class="lead">"I enjoy working with people, solving practical problems, and keeping systems running smoothly."</div>
+        <p>Whether it's making an airport guest feel welcomed or updating firmware on a network switch, I bring care, patience, and attention to detail to every task. I'm currently looking for opportunities where I can combine my technical foundation with my people skills — front-desk roles, customer service, or IT support positions where both sides of my experience add value.</p>
+      </div>
+    </div>
+
+    <aside class="about-side reveal">
+      <h3>At a glance</h3>
+      <div data-bind="about.facts">
+        <div class="fact-row"><span class="lbl">Education</span><span class="val">B.Tech, CSE</span></div>
+        <div class="fact-row"><span class="lbl">Score</span><span class="val">76.87%</span></div>
+        <div class="fact-row"><span class="lbl">Experience</span><span class="val">4 roles</span></div>
+        <div class="fact-row"><span class="lbl">Languages</span><span class="val">English, Hindi</span></div>
+        <div class="fact-row"><span class="lbl">Location</span><span class="val">India</span></div>
+        <div class="fact-row"><span class="lbl">Status</span><span class="val" style="color:var(--accent-2);">Available</span></div>
+      </div>
+    </aside>
+  </div>
+
+  <h2 class="subhead reveal" style="margin-top:40px;" data-bind="education.heading">Education &amp; <em class="italic accent-text">certifications</em></h2>
+  <div class="edu-grid">
+    <div class="edu-card reveal">
+      <h3 data-bind="education.degree">B.Tech — Computer Science &amp; Engineering</h3>
+      <p class="school" data-bind="education.school">Shri Shankaracharya Institute of Professional Management and Technology, Raipur, C.G.</p>
+      <p style="color:var(--text-soft);font-size:14px;" data-bind="education.description">A four-year programme covering core computer science, software fundamentals, and engineering practice — providing the technical foundation behind my hands-on IT support work.</p>
+      <div class="meta">
+        <div><strong>Score:</strong> <span data-bind="education.score">76.87%</span></div>
+        <div><strong>Duration:</strong> <span data-bind="education.duration">April 2019 – May 2023</span></div>
+      </div>
+    </div>
+
+    <div class="cert-card reveal">
+      <h3>Certifications</h3>
+      <p style="color:var(--text-soft);font-size:14px;" data-bind="certifications.intro">Continuous learning across data and productivity tools.</p>
+      <div class="cert-list" data-bind="certifications.list">
+        <div class="cert-item">
+          <div class="ico">&#10003;</div>
+          <div>
+            <h4>Google Data Analytics Professional Certificate</h4>
+            <p>Coursera</p>
+          </div>
+        </div>
+        <div class="cert-item">
+          <div class="ico">&#10003;</div>
+          <div>
+            <h4>Microsoft Excel — Excel Course</h4>
+            <p>Udemy</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <h3 data-bind="footer.brand">Gaurav Yadav</h3>
+      <p data-bind="footer.blurb">Customer Service &amp; IT Support Professional, based in India.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Navigate</h4>
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="experience.html">Experience</a>
+      <a href="skills.html">Skills</a>
+      <a href="contact.html">Contact</a>
+    </div>
+    <div class="footer-col">
+      <h4>Connect</h4>
+      <a href="mailto:Gauravyadav9564@gmail.com" data-bind="footer.email">Gauravyadav9564@gmail.com</a>
+      <a href="tel:+917999690106" data-bind="footer.phone">+91 79996 90106</a>
+      <a href="https://linkedin.com/in/gauravy-yadav" target="_blank" rel="noopener" data-bind="footer.linkedin">LinkedIn</a>
+    </div>
+  </div>
+  <div class="footer-bot">
+    &copy; <span id="yr" data-bind="footer.year"></span> <span data-bind="footer.brand">Gaurav Yadav</span>. <span data-bind="footer.credit">Designed &amp; crafted with care.</span>
+  </div>
+</footer>
+
+<script src="js/content-loader.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>

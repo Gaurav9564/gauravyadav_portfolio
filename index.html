@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#faf7f2" />
+  <title>Gaurav Yadav — Customer Service & IT Support</title>
+  <meta name="description" content="Gaurav Yadav — Customer Service & IT Support Professional. Computer Science graduate with experience in telecom, Wi-Fi, and front-desk operations." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400;1,9..144,500&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css" />
+  <script>
+    (function() {
+      try {
+        var t = localStorage.getItem('theme');
+        if (!t) t = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        document.documentElement.setAttribute('data-theme', t);
+      } catch (e) {}
+    })();
+  </script>
+</head>
+<body data-page="home">
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="index.html" class="logo" data-bind="logo">Gaurav<span class="dot">.</span></a>
+    <div class="nav-right">
+      <div class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="experience.html">Experience</a>
+        <a href="skills.html">Skills</a>
+        <a href="contact.html">Contact</a>
+      </div>
+      <button class="theme-toggle" aria-label="Toggle theme" title="Toggle theme">
+        <span class="theme-icon">☾</span>
+      </button>
+      <button class="menu-btn" aria-label="Toggle menu">&#9776;</button>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="reveal">
+    <div class="hero-meta">
+      <span class="line"></span>
+      <span data-bind="hero.metaLabel">Portfolio · 2026</span>
+    </div>
+    <h1 class="title" data-bind="hero.title">Hello, I'm <em>Gaurav Yadav</em> — bridging people &amp; technology with care.</h1>
+    <p class="subtitle" data-bind="hero.subtitle">
+      Computer Science graduate with hands-on experience in customer service, telecom &amp; Wi-Fi support, and PC/laptop setup. I bring a calm, professional approach to passenger assistance, front-desk operations, and technical troubleshooting.
+    </p>
+    <div class="cta-row">
+      <a class="btn btn-primary" href="contact.html" data-bind="hero.primaryCta">Get in touch &rarr;</a>
+      <a class="btn btn-ghost" href="about.html" data-bind="hero.secondaryCta">About me</a>
+    </div>
+  </div>
+
+  <div class="portrait-wrap reveal">
+    <div class="portrait-bg"></div>
+    <div class="portrait" data-bind="hero.portraitInitials">GY</div>
+    <div class="portrait-tag" data-bind="hero.portraitTag">Open to opportunities</div>
+  </div>
+</header>
+
+<section class="stats-strip">
+  <div class="stats-row" data-bind="stats.row">
+    <div class="stat-cell reveal">
+      <span class="num">76.87<small>%</small></span>
+      <div class="lbl">B.Tech CSE Score</div>
+    </div>
+    <div class="stat-cell reveal">
+      <span class="num">4+</span>
+      <div class="lbl">Professional Roles</div>
+    </div>
+    <div class="stat-cell reveal">
+      <span class="num">2</span>
+      <div class="lbl">Certifications</div>
+    </div>
+    <div class="stat-cell reveal">
+      <span class="num">2023</span>
+      <div class="lbl">Year Graduated</div>
+    </div>
+  </div>
+</section>
+
+<section class="preview-section">
+  <div class="preview-head reveal">
+    <h2 data-bind="previewHead.title">Selected <em class="italic accent-text">experience</em></h2>
+    <a href="experience.html" data-bind="previewHead.link">View all experience &rarr;</a>
+  </div>
+  <div class="preview-grid" data-bind="previewGrid">
+    <div class="preview-card reveal">
+      <span class="yr">2026</span>
+      <h3>Project Engineer</h3>
+      <p class="co">Nippon Data Systems Ltd.</p>
+      <p>Installed IP/analog phones and managed Wi-Fi coverage checks across client offices.</p>
+    </div>
+    <div class="preview-card reveal">
+      <span class="yr">2025</span>
+      <h3>Customer Service Executive</h3>
+      <p class="co">Global Flight Handling Service</p>
+      <p>Assisted passengers, handled inquiries, and made public announcements at the airport.</p>
+    </div>
+    <div class="preview-card reveal">
+      <span class="yr">2024</span>
+      <h3>Receptionist</h3>
+      <p class="co">Front-Desk &amp; Admin Support</p>
+      <p>Greeted visitors, managed calls, and supported office staff with scheduling.</p>
+    </div>
+    <div class="preview-card reveal">
+      <span class="yr">2023</span>
+      <h3>Setup Technician</h3>
+      <p class="co">Tech Grow Solution</p>
+      <p>Assembled PCs, installed OS/drivers, and prepared systems for end-users.</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <h3 data-bind="footer.brand">Gaurav Yadav</h3>
+      <p data-bind="footer.blurb">Customer Service &amp; IT Support Professional, based in India. Open to opportunities in front-desk, customer service, and technical support.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Navigate</h4>
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="experience.html">Experience</a>
+      <a href="skills.html">Skills</a>
+      <a href="contact.html">Contact</a>
+    </div>
+    <div class="footer-col">
+      <h4>Connect</h4>
+      <a href="mailto:Gauravyadav9564@gmail.com" data-bind="footer.email">Gauravyadav9564@gmail.com</a>
+      <a href="tel:+917999690106" data-bind="footer.phone">+91 79996 90106</a>
+      <a href="https://linkedin.com/in/gauravy-yadav" target="_blank" rel="noopener" data-bind="footer.linkedin">LinkedIn</a>
+    </div>
+  </div>
+  <div class="footer-bot">
+    &copy; <span id="yr" data-bind="footer.year"></span> <span data-bind="footer.brand">Gaurav Yadav</span>. <span data-bind="footer.credit">Designed &amp; crafted with care.</span>
+  </div>
+</footer>
+
+<script src="js/content-loader.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>
