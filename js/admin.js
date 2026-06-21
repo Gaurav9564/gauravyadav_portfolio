@@ -302,6 +302,7 @@
     renderExperiencePanel();
     renderSkillsPanel();
     renderContactPanel();
+    renderFilesPanel();
   }
 
   function renderSitePanel() {
@@ -710,6 +711,223 @@
     ));
     c3.appendChild(field('Form note', content.contact.formNote, v => content.contact.formNote = v, { textarea: true, rows: 2 }));
     p.appendChild(c3);
+  }
+
+  // ---------- FILES & MEDIA (GitHub-backed) ----------
+  let filesCurrentDir = '';
+
+  function ghHeaders() {
+    const cfg = getGhCfg();
+    return {
+      'Authorization': 'Bearer ' + cfg.token,
+      'Accept': 'application/vnd.github+json',
+      'X-GitHub-Api-Version': '2022-11-28'
+    };
+  }
+
+  function renderFilesPanel() {
+    const p = $('.admin-panel[data-panel="files"]');
+    if (!p) return;
+    p.innerHTML = '';
+    const cfg = getGhCfg();
+
+    if (!cfg.token || !cfg.owner || !cfg.repo) {
+      const c = card('Files & Media');
+      const msg = document.createElement('p');
+      msg.style.color = 'var(--muted)';
+      msg.style.fontSize = '14px';
+      msg.innerHTML = 'Connect GitHub first (tap <strong>⚙ GitHub</strong> at the top) to upload, add, and delete files.';
+      c.appendChild(msg);
+      p.appendChild(c);
+      return;
+    }
+
+    // Upload card
+    const up = card('Upload a file');
+    const hint = document.createElement('p');
+    hint.style.cssText = 'color:var(--muted);font-size:13px;margin:0 0 12px;';
+    hint.innerHTML = 'Pick any file (image, PDF, etc.). It uploads into the current folder: <code style="background:var(--bg-2);padding:2px 6px;border-radius:4px;">' + (filesCurrentDir || '/') + '</code>';
+    up.appendChild(hint);
+
+    const fileInput = document.createElement('input');
+    fileInput.type = 'file';
+    fileInput.style.cssText = 'width:100%;margin-bottom:10px;';
+    up.appendChild(fileInput);
+
+    const nameField = field('Save as (filename — optional, blank = original name)', '', () => {}, { placeholder: 'e.g. profile.jpg' });
+    up.appendChild(nameField);
+
+    const upBtn = document.createElement('button');
+    upBtn.className = 'btn btn-primary';
+    upBtn.textContent = '↑ Upload to GitHub';
+    upBtn.style.marginTop = '4px';
+    upBtn.addEventListener('click', () => {
+      const f = fileInput.files[0];
+      if (!f) { alert('Choose a file first.'); return; }
+      const custom = nameField.querySelector('input').value.trim();
+      uploadFile(f, custom || f.name);
+    });
+    up.appendChild(upBtn);
+    p.appendChild(up);
+
+    // Browser card
+    const browse = card('Repository files', actions => {
+      actions.appendChild(miniBtn('↻ Refresh', () => listDir(filesCurrentDir)));
+    });
+    const crumb = document.createElement('div');
+    crumb.style.cssText = 'font-size:13px;color:var(--muted);margin-bottom:10px;word-break:break-all;';
+    crumb.innerHTML = '📁 <strong>/' + (filesCurrentDir || '') + '</strong>';
+    browse.appendChild(crumb);
+
+    const list = document.createElement('div');
+    list.id = 'filesList';
+    list.innerHTML = '<p style="color:var(--muted);font-size:14px;">Loading…</p>';
+    browse.appendChild(list);
+    p.appendChild(browse);
+
+    listDir(filesCurrentDir);
+  }
+
+  async function listDir(dir) {
+    const cfg = getGhCfg();
+    const list = $('#filesList');
+    if (!list) return;
+    list.innerHTML = '<p style="color:var(--muted);font-size:14px;">Loading…</p>';
+    const api = 'https://api.github.com/repos/' + cfg.owner + '/' + cfg.repo + '/contents/' + encodeURI(dir) + '?ref=' + encodeURIComponent(cfg.branch || 'main');
+    let items;
+    try {
+      const r = await fetch(api, { headers: ghHeaders(), cache: 'no-store' });
+      if (!r.ok) throw new Error('GitHub ' + r.status + ': ' + (await r.text()));
+      items = await r.json();
+    } catch (e) {
+      list.innerHTML = '<p class="err">Could not load files: ' + e.message + '</p>';
+      return;
+    }
+    if (!Array.isArray(items)) { list.innerHTML = '<p class="err">Unexpected response.</p>'; return; }
+
+    list.innerHTML = '';
+    // Up a level
+    if (dir) {
+      const upRow = fileRow('⬆', '.. (up a level)', null);
+      upRow.style.cursor = 'pointer';
+      upRow.addEventListener('click', () => { filesCurrentDir = dir.split('/').slice(0, -1).join('/'); renderFilesPanel(); });
+      list.appendChild(upRow);
+    }
+    // Folders first, then files
+    items.sort((a, b) => (a.type === b.type ? a.name.localeCompare(b.name) : a.type === 'dir' ? -1 : 1));
+    items.forEach(it => {
+      const isDir = it.type === 'dir';
+      const row = fileRow(isDir ? '📁' : fileIcon(it.name), it.name, isDir ? null : it.size);
+      if (isDir) {
+        row.style.cursor = 'pointer';
+        row.addEventListener('click', () => { filesCurrentDir = it.path; renderFilesPanel(); });
+      } else {
+        const acts = document.createElement('span');
+        acts.style.cssText = 'display:flex;gap:6px;flex-shrink:0;';
+        const view = document.createElement('a');
+        view.href = it.html_url;
+        view.target = '_blank';
+        view.className = 'admin-mini-btn';
+        view.textContent = 'View';
+        view.style.textDecoration = 'none';
+        acts.appendChild(view);
+        const copy = miniBtn('Copy path', () => {
+          navigator.clipboard && navigator.clipboard.writeText(it.path);
+          copy.textContent = 'Copied!';
+          setTimeout(() => copy.textContent = 'Copy path', 1200);
+        });
+        acts.appendChild(copy);
+        acts.appendChild(miniBtn('Delete', () => deleteFile(it.path, it.sha, it.name), true));
+        row.appendChild(acts);
+      }
+      list.appendChild(row);
+    });
+    if (!items.length) list.innerHTML += '<p style="color:var(--muted);font-size:14px;">Empty folder.</p>';
+  }
+
+  function fileRow(icon, name, size) {
+    const row = document.createElement('div');
+    row.style.cssText = 'display:flex;align-items:center;gap:10px;padding:10px 8px;border-bottom:1px solid var(--border);font-size:14px;';
+    const ic = document.createElement('span');
+    ic.textContent = icon;
+    ic.style.flexShrink = '0';
+    row.appendChild(ic);
+    const nm = document.createElement('span');
+    nm.textContent = name + (size != null ? '  (' + fmtSize(size) + ')' : '');
+    nm.style.cssText = 'flex:1;word-break:break-all;';
+    row.appendChild(nm);
+    return row;
+  }
+
+  function fileIcon(name) {
+    const ext = (name.split('.').pop() || '').toLowerCase();
+    if (['png', 'jpg', 'jpeg', 'gif', 'webp', 'svg', 'avif'].includes(ext)) return '🖼';
+    if (ext === 'pdf') return '📄';
+    if (['html', 'htm'].includes(ext)) return '🌐';
+    if (['js', 'css', 'json'].includes(ext)) return '⚙';
+    return '📎';
+  }
+
+  function fmtSize(b) {
+    if (b < 1024) return b + ' B';
+    if (b < 1048576) return (b / 1024).toFixed(1) + ' KB';
+    return (b / 1048576).toFixed(1) + ' MB';
+  }
+
+  function uploadFile(file, name) {
+    const cfg = getGhCfg();
+    const reader = new FileReader();
+    reader.onload = async () => {
+      // reader.result is a data URL: strip the prefix to get base64
+      const b64 = String(reader.result).split(',')[1];
+      const path = (filesCurrentDir ? filesCurrentDir + '/' : '') + name;
+      const api = 'https://api.github.com/repos/' + cfg.owner + '/' + cfg.repo + '/contents/' + encodeURI(path);
+      setStatus('Uploading ' + name + '…');
+
+      // Check if it already exists (need sha to overwrite)
+      let sha;
+      try {
+        const r = await fetch(api + '?ref=' + encodeURIComponent(cfg.branch || 'main'), { headers: ghHeaders(), cache: 'no-store' });
+        if (r.ok) {
+          if (!confirm(name + ' already exists. Overwrite it?')) { setStatus('Upload cancelled'); return; }
+          sha = (await r.json()).sha;
+        }
+      } catch (e) {}
+
+      const body = { message: 'Upload ' + path + ' via admin editor', content: b64, branch: cfg.branch || 'main' };
+      if (sha) body.sha = sha;
+      try {
+        const r = await fetch(api, { method: 'PUT', headers: ghHeaders(), body: JSON.stringify(body) });
+        if (!r.ok) throw new Error('GitHub ' + r.status + ': ' + (await r.text()));
+        setStatus('Uploaded ✓', true);
+        alert('Uploaded "' + name + '". Live in ~1 minute.\n\nPath to use in content: ' + path);
+        listDir(filesCurrentDir);
+      } catch (e) {
+        setStatus('Upload failed');
+        alert('Upload failed: ' + e.message + '\n\nNote: very large files may be rejected by the GitHub API.');
+      }
+    };
+    reader.readAsDataURL(file);
+  }
+
+  async function deleteFile(path, sha, name) {
+    if (!confirm('Delete "' + name + '" from the repository? This cannot be undone.')) return;
+    const cfg = getGhCfg();
+    const api = 'https://api.github.com/repos/' + cfg.owner + '/' + cfg.repo + '/contents/' + encodeURI(path);
+    setStatus('Deleting ' + name + '…');
+    try {
+      const r = await fetch(api, {
+        method: 'DELETE',
+        headers: ghHeaders(),
+        body: JSON.stringify({ message: 'Delete ' + path + ' via admin editor', sha: sha, branch: cfg.branch || 'main' })
+      });
+      if (!r.ok) throw new Error('GitHub ' + r.status + ': ' + (await r.text()));
+      setStatus('Deleted ✓', true);
+      listDir(filesCurrentDir);
+    } catch (e) {
+      setStatus('Delete failed');
+      alert('Delete failed: ' + e.message);
+    }
   }
 
   // ---------- UTILITIES ----------
