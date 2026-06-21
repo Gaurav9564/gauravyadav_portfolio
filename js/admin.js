@@ -7,6 +7,7 @@
   const ADMIN_PASSWORD = 'gaurav2026';
   const SESSION_KEY = 'gy_admin_session';
   const LS_CONTENT_KEY = 'gy_content_override';
+  const GH_CFG_KEY = 'gy_gh_cfg';
 
   const $ = (sel, root) => (root || document).querySelector(sel);
   const $$ = (sel, root) => Array.from((root || document).querySelectorAll(sel));
@@ -107,6 +108,98 @@
     });
     $('#importBtn').addEventListener('click', () => $('#importFile').click());
     $('#importFile').addEventListener('change', importJSON);
+    bindGitHub();
+  }
+
+  // ---------- GITHUB PUBLISH ----------
+  function getGhCfg() {
+    try { return JSON.parse(localStorage.getItem(GH_CFG_KEY)) || {}; } catch (e) { return {}; }
+  }
+  function setGhCfg(c) { localStorage.setItem(GH_CFG_KEY, JSON.stringify(c)); }
+
+  function bindGitHub() {
+    const panel = $('#ghPanel');
+    const cfg = getGhCfg();
+    // Sensible defaults so the user only needs to paste a token
+    $('#ghToken').value = cfg.token || '';
+    $('#ghOwner').value = cfg.owner || 'Gaurav9564';
+    $('#ghRepo').value = cfg.repo || 'gauravyadav_portfolio';
+    $('#ghBranch').value = cfg.branch || 'main';
+    $('#ghPath').value = cfg.path || 'data/content.json';
+
+    $('#ghSettingsBtn').addEventListener('click', () => {
+      panel.style.display = panel.style.display === 'none' ? 'block' : 'none';
+      if (panel.style.display === 'block') panel.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    });
+    $('#ghCloseBtn').addEventListener('click', () => { panel.style.display = 'none'; });
+    $('#ghSaveBtn').addEventListener('click', () => {
+      setGhCfg({
+        token: $('#ghToken').value.trim(),
+        owner: $('#ghOwner').value.trim(),
+        repo: $('#ghRepo').value.trim(),
+        branch: $('#ghBranch').value.trim() || 'main',
+        path: $('#ghPath').value.trim() || 'data/content.json'
+      });
+      const msg = $('#ghMsg');
+      msg.textContent = 'Saved on this device ✓';
+      msg.style.color = 'var(--accent)';
+      setTimeout(() => { panel.style.display = 'none'; msg.textContent = ''; }, 1200);
+    });
+    $('#publishBtn').addEventListener('click', publishToGitHub);
+  }
+
+  function b64EncodeUnicode(str) {
+    return btoa(unescape(encodeURIComponent(str)));
+  }
+
+  async function publishToGitHub() {
+    const cfg = getGhCfg();
+    if (!cfg.token || !cfg.owner || !cfg.repo) {
+      $('#ghPanel').style.display = 'block';
+      $('#ghPanel').scrollIntoView({ behavior: 'smooth', block: 'center' });
+      $('#ghMsg').textContent = 'Add your GitHub token first, then Save.';
+      $('#ghMsg').style.color = '';
+      return;
+    }
+    const path = cfg.path || 'data/content.json';
+    const branch = cfg.branch || 'main';
+    const api = `https://api.github.com/repos/${cfg.owner}/${cfg.repo}/contents/${path}`;
+    const headers = {
+      'Authorization': 'Bearer ' + cfg.token,
+      'Accept': 'application/vnd.github+json',
+      'X-GitHub-Api-Version': '2022-11-28'
+    };
+    setStatus('Publishing…');
+
+    // 1) Get current file SHA (required to update an existing file)
+    let sha;
+    try {
+      const r = await fetch(api + '?ref=' + encodeURIComponent(branch), { headers, cache: 'no-store' });
+      if (r.ok) { sha = (await r.json()).sha; }
+      else if (r.status !== 404) { throw new Error('GitHub ' + r.status + ': ' + (await r.text())); }
+    } catch (e) {
+      setStatus('Publish failed');
+      alert('Could not reach GitHub: ' + e.message);
+      return;
+    }
+
+    // 2) PUT the new content
+    const body = {
+      message: 'Update site content via admin editor',
+      content: b64EncodeUnicode(JSON.stringify(content, null, 2)),
+      branch: branch
+    };
+    if (sha) body.sha = sha;
+
+    try {
+      const r = await fetch(api, { method: 'PUT', headers, body: JSON.stringify(body) });
+      if (!r.ok) throw new Error('GitHub ' + r.status + ': ' + (await r.text()));
+      setStatus('Published live ✓', true);
+      alert('Published! Your live site will refresh in about a minute.');
+    } catch (e) {
+      setStatus('Publish failed');
+      alert('Publish failed: ' + e.message + '\n\nCheck that your token has "Contents: read and write" on this repo.');
+    }
   }
 
   function exportJSON() {

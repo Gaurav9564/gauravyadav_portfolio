@@ -62,8 +62,30 @@
       <button class="btn btn-ghost" id="importBtn">Import JSON</button>
       <input type="file" id="importFile" accept="application/json,.json" style="display:none;" />
       <button class="btn btn-ghost" id="clearBtn" title="Clear local edits">Discard local</button>
-      <button class="btn btn-primary" id="exportBtn">↓ Export JSON</button>
+      <button class="btn btn-ghost" id="ghSettingsBtn" title="Connect GitHub for one-tap publishing">⚙ GitHub</button>
+      <button class="btn btn-ghost" id="exportBtn">↓ Export JSON</button>
+      <button class="btn btn-primary" id="publishBtn" title="Commit content to GitHub — live site updates in ~1 min">☁ Publish live</button>
     </div>
+  </div>
+
+  <!-- GitHub connect panel (hidden until ⚙ GitHub) -->
+  <div class="admin-card" id="ghPanel" style="display:none;">
+    <h3>Connect GitHub <span class="small-actions"><button class="admin-mini-btn" id="ghCloseBtn" type="button">Close</button></span></h3>
+    <p style="color:var(--muted);font-size:13px;margin:0 0 12px;">
+      Paste a GitHub token with <strong>Contents: read &amp; write</strong> on this repo. Stored only on this device.
+      Then just tap <strong>Publish live</strong> to update your site from your phone.
+    </p>
+    <div class="admin-field"><label>GitHub token</label><input type="password" id="ghToken" placeholder="github_pat_… or ghp_…" autocomplete="off" /></div>
+    <div class="admin-grid-2">
+      <div class="admin-field"><label>Owner (username)</label><input type="text" id="ghOwner" placeholder="Gaurav9564" /></div>
+      <div class="admin-field"><label>Repository</label><input type="text" id="ghRepo" placeholder="gauravyadav_portfolio" /></div>
+    </div>
+    <div class="admin-grid-2">
+      <div class="admin-field"><label>Branch</label><input type="text" id="ghBranch" placeholder="main" /></div>
+      <div class="admin-field"><label>File path</label><input type="text" id="ghPath" placeholder="data/content.json" /></div>
+    </div>
+    <button class="btn btn-primary" id="ghSaveBtn" style="margin-top:6px;">Save connection</button>
+    <div class="err" id="ghMsg" style="margin-top:8px;"></div>
   </div>
 
   <div class="admin-hint">
