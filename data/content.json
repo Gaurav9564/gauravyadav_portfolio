@@ -16,7 +16,8 @@
     "secondaryCtaLabel": "About me",
     "secondaryCtaHref": "about.html",
     "portraitInitials": "GY",
-    "portraitTag": "Open to opportunities"
+    "portraitTag": "Open to opportunities",
+    "photo": ""
   },
   "stats": [
     { "num": "76.87", "unit": "%", "label": "B.Tech CSE Score" },

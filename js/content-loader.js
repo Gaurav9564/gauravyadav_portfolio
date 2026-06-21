@@ -82,7 +82,16 @@
     if (p) { p.innerHTML = esc(c.hero.primaryCtaLabel); p.href = c.hero.primaryCtaHref; }
     const s = document.querySelector('[data-bind="hero.secondaryCta"]');
     if (s) { s.innerHTML = esc(c.hero.secondaryCtaLabel); s.href = c.hero.secondaryCtaHref; }
-    setText('[data-bind="hero.portraitInitials"]', c.hero.portraitInitials);
+    // Portrait: show uploaded photo if set, otherwise the initials
+    const portrait = document.querySelector('[data-bind="hero.portraitInitials"]');
+    if (portrait) {
+      if (c.hero.photo) {
+        portrait.innerHTML = '<img src="' + esc(c.hero.photo) + '" alt="' +
+          esc((c.site && c.site.name) || 'Profile photo') + '" loading="lazy" />';
+      } else {
+        portrait.textContent = c.hero.portraitInitials || '';
+      }
+    }
     setText('[data-bind="hero.portraitTag"]', c.hero.portraitTag);
 
     // Stats
@@ -125,6 +134,19 @@
     const h = document.querySelector('[data-bind="about.head"]');
     if (h) h.innerHTML = esc(c.about.headStart) + '<em class="italic accent-text">' + esc(c.about.headEm) + '</em>';
     setText('[data-bind="about.headSubtitle"]', c.about.headSubtitle);
+
+    // Profile photo (shared with hero.photo) — show on About if set
+    const aboutPhoto = document.querySelector('[data-bind="about.photo"]');
+    if (aboutPhoto) {
+      const photo = c.hero && c.hero.photo;
+      if (photo) {
+        aboutPhoto.src = photo;
+        aboutPhoto.alt = ((c.site && c.site.name) || '') + ' — profile photo';
+        aboutPhoto.style.display = '';
+      } else {
+        aboutPhoto.style.display = 'none';
+      }
+    }
 
     setText('[data-bind="about.greeting"]', c.about.greeting);
     const para = document.querySelector('[data-bind="about.paragraphs"]');

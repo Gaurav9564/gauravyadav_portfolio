@@ -342,9 +342,10 @@
       field('Secondary button link', content.hero.secondaryCtaHref, v => content.hero.secondaryCtaHref = v)
     ));
     c.appendChild(grid2(
-      field('Portrait initials', content.hero.portraitInitials, v => content.hero.portraitInitials = v),
+      field('Portrait initials (shown if no photo)', content.hero.portraitInitials, v => content.hero.portraitInitials = v),
       field('Portrait tag', content.hero.portraitTag, v => content.hero.portraitTag = v)
     ));
+    c.appendChild(field('Profile photo — upload in “Files & Media”, then paste its path here (e.g. profile.jpg). Shows on Home + About; leave blank to use initials.', content.hero.photo, v => content.hero.photo = v, { placeholder: 'profile.jpg' }));
     p.appendChild(c);
 
     if (!content.previewHead) content.previewHead = {};

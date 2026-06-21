@@ -371,6 +371,11 @@ img { max-width: 100%; display: block; }
   transition: background 0.35s ease, box-shadow 0.35s ease;
 }
 [data-theme="dark"] .portrait { color: #0b1020; }
+.portrait img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.about-photo {
+  width: 128px; height: 128px; border-radius: 50%; object-fit: cover;
+  margin-bottom: 20px; border: 4px solid var(--accent-soft); box-shadow: var(--shadow-lg);
+}
 
 .portrait-tag {
   position: absolute;
